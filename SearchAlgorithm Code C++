@@ -1,0 +1,90 @@
+/****************************************
+Chelsea Ogbede
+Fundamentals of Programming
+1336
+12/06/2022
+*****************************************/
+#include <iostream>
+
+using namespace std;
+
+//using function prototypes 
+void getValue(int&);
+int linearSearch(int[], int, int, int&);
+int binarySearch(int[], int, int, int&);
+
+//first function
+int main() {
+    const int size = 20;
+    int array[size] = { 1,  2,  3,  4,  5,  6,  7,  8,  9, 10,
+					   15, 20, 30, 40, 50, 60, 70, 80, 90, 100};
+	int linearBench = 0; //initializations
+	int binaryBench = 0;
+	int value;
+	int linearResults;
+	int binaryResults;
+	
+	//calling 2nd function
+	getValue(value);
+	
+	linearResults = linearSearch(array, size, value, linearBench);
+	binaryResults = binarySearch (array, size, value, binaryBench);
+	
+	//output
+	cout<< "Number of comparisons made before finding the value: " << value << "\n";
+	cout<< "The linear search algorithm: " << linearBench << "\n";
+	cout<< "the binary search algorithm: "<< binaryBench << "\n";
+	
+	return 0;
+}
+
+//second function
+void getValue(int &value) {
+    cout<< "Enter the value to search for: ";
+    cin>> value;
+}
+
+//3rd function 
+int linearSearch(int list[], int SIZE, int value, int &linearBench) {
+    int index = 0;  //this will search array
+    int position = -1;
+    bool found = false; //a flag to show if the value is found
+    
+    while(index < SIZE && !found) {
+        if (list[index] == value) {
+            found = true;
+            position = index; //records the value's subscript
+        }
+        index++;
+        
+        if (position == -1)
+            linearBench++;
+    }
+    
+    return position;
+}
+
+//4th function
+int binarySearch(int array[], int SIZE, int value, int &binaryBench) {
+    int first = 0;
+    int last = SIZE - 1;
+    int middle;
+    int position = -1;
+    bool found = false;
+    
+    while(!found && first <= last) {
+        middle = (first + last) / 2;
+        if (array[middle] == value) {
+            found = true;
+            position = middle;
+        }
+        else if (array[middle] > value)
+            last = middle - 1;
+        else 
+            first = middle + 1;
+        if (position == -1)
+            binaryBench++;
+    }
+    return position;
+}
+
